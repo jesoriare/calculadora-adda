@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculadora ADDA · Convocatoria</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/shared.css">
+<link rel="stylesheet" href="css/convocatoria.css">
+</head>
+<body>
+<div class="page">
+
+  <header>
+    <div class="logo">
+      <div class="logo-dot"></div>
+      <span>Convocatoria</span>
+    </div>
+    <h1>Nota final<br><em>ADDA</em></h1>
+    <div class="page-nav">
+      <a class="page-nav-btn" href="index.html">Alternativa</a>
+      <a class="page-nav-btn active" href="adda_convocatoria.html">Convocatoria</a>
+    </div>
+    <p class="subtitle">Si tienes ≥ 3 puedes guardar la nota o presentarte (la nueva sustituye a la anterior). Si tienes &lt; 3, obligatorio presentarse.</p>
+  </header>
+
+  <div class="formulas">
+    <div class="formula-line"><b>Teoría</b> = T1 × 30% + T2 × 30% <span class="hl">(60% total)</span></div>
+    <div class="formula-line"><b>Prácticas</b> = P1×25% + P2×25% + P3×20% + P4×30% <span class="hl">(40% total)</span></div>
+    <div class="formula-line"><b>Nota final</b> = Teoría + Prácticas · <span class="hl">aprobar ≥ 5</span></div>
+    <div class="formula-line"><b>Guardar nota:</b> solo disponible si tienes <span class="hl">≥ 3</span></div>
+    <div class="formula-line"><b>Presentarse:</b> la nueva nota sustituye a la anterior sin vuelta atrás</div>
+  </div>
+
+  <div class="section-label">Exámenes de teoría</div>
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">Teoría</div>
+      <div class="tag tag-orange">60% de la nota</div>
+    </div>
+
+    <!-- T1 -->
+    <div class="teoria-block">
+      <div class="teoria-top">
+        <div class="teoria-name">Examen T1 <span style="font-size:11px;color:var(--text3)">(30%)</span></div>
+        <div class="toggle-group">
+          <button class="toggle-btn active-guardar" id="t1-btn-guardar" onclick="setDecision('t1','guardar')">Guardar nota</button>
+          <button class="toggle-btn" id="t1-btn-presentar" onclick="setDecision('t1','presentar')">Presentarse</button>
+        </div>
+      </div>
+      <div class="nota-row" style="margin-bottom:10px">
+        <label id="t1-label">Nota del examen</label>
+        <input type="number" class="nota-input" id="t1" min="0" max="10" step="0.1" value="5" oninput="onNotaChange('t1')">
+      </div>
+      <div class="nueva-row" id="t1-nueva-row" style="display:none">
+        <div class="nota-row">
+          <label style="color:var(--red);font-size:13px;">Nueva nota del examen</label>
+          <input type="number" class="nota-input nueva" id="t1-nueva" min="0" max="10" step="0.1" placeholder="0" oninput="calc()">
+        </div>
+      </div>
+      <div class="info-pill can-keep" id="t1-pill">Tienes ≥ 3 · nota guardada. Puedes presentarte si quieres intentar mejorarla.</div>
+    </div>
+
+    <!-- T2 -->
+    <div class="teoria-block">
+      <div class="teoria-top">
+        <div class="teoria-name">Examen T2 <span style="font-size:11px;color:var(--text3)">(30%)</span></div>
+        <div class="toggle-group">
+          <button class="toggle-btn active-guardar" id="t2-btn-guardar" onclick="setDecision('t2','guardar')">Guardar nota</button>
+          <button class="toggle-btn" id="t2-btn-presentar" onclick="setDecision('t2','presentar')">Presentarse</button>
+        </div>
+      </div>
+      <div class="nota-row" style="margin-bottom:10px">
+        <label id="t2-label">Nota del examen</label>
+        <input type="number" class="nota-input" id="t2" min="0" max="10" step="0.1" value="5" oninput="onNotaChange('t2')">
+      </div>
+      <div class="nueva-row" id="t2-nueva-row" style="display:none">
+        <div class="nota-row">
+          <label style="color:var(--red);font-size:13px;">Nueva nota del examen</label>
+          <input type="number" class="nota-input nueva" id="t2-nueva" min="0" max="10" step="0.1" placeholder="0" oninput="calc()">
+        </div>
+      </div>
+      <div class="info-pill can-keep" id="t2-pill">Tienes ≥ 3 · nota guardada. Puedes presentarte si quieres intentar mejorarla.</div>
+    </div>
+
+    <div class="mini-results">
+      <div class="result-box">
+        <div class="result-label">Nota T1 que cuenta</div>
+        <div class="result-val" id="show-t1">5.0</div>
+      </div>
+      <div class="result-box">
+        <div class="result-label">Nota T2 que cuenta</div>
+        <div class="result-val" id="show-t2">5.0</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-label">Exámenes de prácticas</div>
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">Prácticas</div>
+      <div class="tag tag-purple">40% de la nota</div>
+    </div>
+    <div class="field"><div class="field-label">Práctica 1 <small>(25%)</small></div><input type="number" id="p1" min="0" max="10" step="0.1" value="6" oninput="calc()"></div>
+    <div class="field"><div class="field-label">Práctica 2 <small>(25%)</small></div><input type="number" id="p2" min="0" max="10" step="0.1" value="6" oninput="calc()"></div>
+    <div class="field"><div class="field-label">Práctica 3 <small>(20%)</small></div><input type="number" id="p3" min="0" max="10" step="0.1" value="6" oninput="calc()"></div>
+    <div class="field"><div class="field-label">Práctica 4 <small>(30%)</small></div><input type="number" id="p4" min="0" max="10" step="0.1" value="6" oninput="calc()"></div>
+    <div class="mini-results">
+      <div class="result-box" style="grid-column:1/-1">
+        <div class="result-label">Nota prácticas (sobre 10)</div>
+        <div class="result-val" id="show-pr">6.00</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-label">Resultado final</div>
+  <div class="final-card">
+    <div class="final-title">Nota final = T1×30% + T2×30% + Prácticas×40%</div>
+    <div class="final-scores">
+      <div class="final-score-box"><div class="final-score-label">Teoría</div><div class="final-score-val" id="r-teoria">—</div></div>
+      <div class="final-score-box"><div class="final-score-label">Prácticas</div><div class="final-score-val" id="r-practicas">—</div></div>
+      <div class="final-score-box highlight"><div class="final-score-label">Final</div><div class="final-score-val" id="r-final">—</div></div>
+    </div>
+    <div class="restricciones">
+      <div class="rest-row"><span class="rest-label">Nota final ≥ 5</span><span class="rest-val" id="rr-final">—</span></div>
+    </div>
+  </div>
+
+  <div class="veredicto aprobado" id="veredicto">
+    <div class="v-title">Aprobado</div>
+    <div id="veredicto-msg">Nota final suficiente para superar la convocatoria.</div>
+  </div>
+
+  <footer>Calculadora ADDA · Convocatoria · hecha con Claude</footer>
+</div>
+
+<script src="js/convocatoria.js"></script>
+</body>
+</html>
